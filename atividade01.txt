@@ -1,0 +1,118 @@
+Aluno Antonio Victor de Arruda Silveira 5B - Noite
+Complexidade de Algoritmos - Atividade 01
+
+Questão 01
+
+a) Rescrever T(n) na forma de an² + bn + c
+
+Para cada iteração do laço externo "for", o laço interno "while" pode ser executado de 1 até j-1 vezes.
+No pior caso, quando o array está em ordem decrescente, o "while" será executado j-1 vezes para cada j.
+Portanto, a contagem de instruções T(n) pode ser expressa como a soma das execuções do "while":
+
+T(n) = 1 + 2 + 3 + ... + (n-1)
+
+Utilizando a fórmula da soma dos primeiros n números inteiros positivos (F1), temos:
+
+T(n) = n(n-1)/2
+
+Expandindo e simplificando, obtemos:
+
+T(n) = (1/2)n^2 - (1/2)n
+
+Aqui, podemos identificar a, b e c da forma an^2 + bn + c:
+
+a = 1/2, b = -1/2, c = 0
+
+b) Indicar a expressão que representa o MELHOR caso
+
+No melhor caso, o array já está ordenado, e o laço interno while não executa nenhuma troca, apenas comparações.
+Portanto, o while será executado 0 vezes para cada j, e a expressão para o melhor caso é simplesmente a contagem das execuções do laço externo for, que é executado (n-1) vezes:
+
+T(n) = n - 1
+
+c) Indicar a expressão que representa o PIOR CASO
+
+Como já discutido, no pior caso, o while executa j-1 vezes para cada j do laço externo for.
+Portanto, a expressão para o pior caso é a mesma que a geral:
+
+T(n) = n(n-1)/2
+
+d) Verificar f(n) = Θ(n^2)
+
+Para verificar se f(n) é Θ(n^2), precisamos mostrar que existem constantes positivas c1, c2 e n0 tais que:
+
+c1 * n^2 <= f(n) <= c2 * n^2 para todo n >= n0
+
+No pior caso, temos f(n) = (1/2)n^2 - (1/2)n.
+Podemos escolher c1 = 1/4 e c2 = 1/2, e um n0 suficientemente grande para que a subtração de (1/2)n seja insignificante comparada a n^2.
+Assim, para n >= n0, a inequação é satisfeita, e f(n) é Θ(n^2).
+
+Essa análise mostra que:
+O algoritmo de ordenação por inserção tem uma complexidade de tempo quadrática no pior caso.
+O que significa que o tempo de execução cresce proporcionalmente ao quadrado do tamanho da entrada.
+No melhor caso, a complexidade é linear.
+
+
+Questão 02 (CÓDIGO ABAIXO E NO ARQUIVO .py)
+
+* CÓDIGO *
+def troca(vetor, i, j): 
+    aux = vetor[i]               # C4.1 
+    vetor[i] = vetor[j]          # C4.2 
+    vetor[j] = aux               # C4.3 
+
+def bolha(vetor): 
+    for i in range(0, len(vetor) - 1, 1):       # C1    Linha 65
+        for j in range(i+1, len(vetor), 1):     # C2    Linha 66
+            if vetor[i] > vetor[j]:             # C3    Linha 67
+                troca(vetor, i, j)              # C4    Linha 68
+
+X = [99,88,77,66,55,44,33,22,11] 
+bolha(X)
+* CÓDIGO *
+
+.
+.
+.
+
+a) Contagem de cada instrução do algoritmo bolha
+
+Para contar as instruções, precisamos analisar quantas vezes cada parte do código é executada em função do tamanho do vetor n.
+
+    - A instrução for i in range(0, len(vetor) - 1, 1): (C1) é executada n-1 vezes.
+    - A instrução for j in range(i+1, len(vetor), 1): (C2) é executada n-i-1 vezes para cada iteração de i. Somando sobre todas as iterações de i, temos a série n-1 + n-2 + ... + 1 = n(n-1)/2.
+    - A instrução if vetor[i] > vetor[j]: (C3) é avaliada sempre que o segundo laço for é executado, ou seja, n(n-1)/2 vezes.
+    - A função troca(vetor, i, j) (C4) é chamada cada vez que a condição do if é verdadeira. No pior caso, isso acontece n(n-1)/2 vezes.
+
+b) Expressar a soma T(n) das instruções do algoritmo de ordenação bolha
+
+A soma T(n) das instruções do algoritmo de ordenação bolha pode ser expressa como:
+
+T(n) = C1 * (n-1) + C2 * (n(n-1)/2) + C3 * (n(n-1)/2) + C4 * (n(n-1)/2)
+
+c) Encontrar a forma fechada de T(n)
+
+Para encontrar a forma fechada de T(n), vamos considerar que todos os custos C1, C2, C3 e C4 são iguais a 1 para simplificar a análise:
+
+T(n) = (n-1) + (n(n-1)/2) + (n(n-1)/2) + (n(n-1)/2)
+
+Somando todas as parcelas, obtemos:
+
+T(n) = (n-1) + 3 * (n(n-1)/2)
+
+T(n) = (n-1) + (3/2) * n(n-1)
+
+T(n) = (1/2) * n^2 + (1/2) * n - 1
+
+d) Verificar f(n) = Θ(n^2)
+
+Para verificar que f(n) = Θ(n^2), precisamos mostrar que existem constantes positivas c1, c2 e n0 tais que:
+
+c1 * n^2 <= f(n) <= c2 * n^2 para todo n >= n0
+
+A forma fechada de T(n) que encontramos é:
+
+T(n) = (1/2) * n^2 + (1/2) * n - 1
+
+Podemos escolher c1 = 1/4 e c2 = 1 (por exemplo) e um n0 suficientemente grande para que os termos (1/2) * n e -1 se tornem insignificantes em comparação com n^2.
+Assim, para n >= n0, a inequação é satisfeita e f(n) é Θ(n^2).
